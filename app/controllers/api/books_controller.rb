@@ -3,4 +3,6 @@ class Api::BooksController < ApplicationController
     @message = "Hello!"
     render "test.json.jb"
   end
+
+  
 end

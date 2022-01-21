@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2022_01_19_181918) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "book_format_types", force: :cascade do |t|
+  create_table "book_format_types", force: :casc ade do |t|
     t.string "name"
     t.boolean "physical"
     t.datetime "created_at", precision: 6, null: false

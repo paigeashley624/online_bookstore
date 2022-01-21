@@ -14,15 +14,20 @@ class Book < ApplicationRecord
     book_reviews.average(:rating).to_i.round(1)
   end
 
-  def self.search(query)
-    
-    authors = Author.where('LOWER(last_name) = ?', query.downcase)
-    publishers = Publisher.where('LOWER(name) = ?',query.downcase)
-    where(author: authors).or(
-      where(publisher: publishers)).or(
-      where('LOWER(title) LIKE ?', "%#{query.downcase}%"))
+  def self.search(query, title_only: false, book_format_type_id: nil, book_format_physical: nil)
+    # Todo: complete logic for keyword arguments
+    q = where('LOWER(title) LIKE ?', "%#{query.downcase}%")
+    return q if title_only
 
-    
+    q.or(where(author: authors(query))).or(where(publisher: publishers(query))).distinct
   end
-  
+
+  def self.authors(query)
+    Author.where('LOWER(last_name) = ?', query.downcase)
+  end
+
+  def self.publishers(query)
+    Publisher.where('LOWER(name) = ?', query.downcase)
+  end
+
 end
